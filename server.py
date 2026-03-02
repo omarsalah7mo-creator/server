@@ -35,7 +35,6 @@ async def main():
     
     print(f"Starting WebSocket server on port {port}...")
     
-    # 🔥 ده اللي بيحل 409
     await bot.delete_webhook()
     
     async with websockets.serve(ws_handler, host, port):
@@ -44,4 +43,5 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
+
 
