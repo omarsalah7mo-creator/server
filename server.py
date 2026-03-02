@@ -3,8 +3,7 @@ import websockets
 import os
 from telebot.async_telebot import AsyncTeleBot
 
-BOT_TOKEN = '8290696483:AAG-yonVayadxER2bWAUUVzxV0tOxhTGYws'
-
+BOT_TOKEN = os.environ.get("8290696483:AAG-yonVayadxER2bWAUUVzxV0tOxhTGYws")  # حط التوكن في Variables
 CHANNEL_ID = -1002484572207 
 
 bot = AsyncTeleBot(BOT_TOKEN)
@@ -25,7 +24,10 @@ async def handle_channel_post(message):
         print(f"[Telegram] New signal received:\n{message.text}")
         
         if connected_clients:
-            await asyncio.gather(*(ws.send(message.text) for ws in connected_clients), return_exceptions=True)
+            await asyncio.gather(
+                *(ws.send(message.text) for ws in connected_clients),
+                return_exceptions=True
+            )
 
 async def main():
     port = int(os.environ.get("PORT", 8765))
@@ -33,9 +35,12 @@ async def main():
     
     print(f"Starting WebSocket server on port {port}...")
     
+    # 🔥 ده اللي بيحل 409
+    await bot.delete_webhook()
+    
     async with websockets.serve(ws_handler, host, port):
         print("Starting Telegram bot polling...")
-        await bot.polling(non_stop=True)
+        await bot.polling(non_stop=True, skip_pending=True)
 
 if __name__ == '__main__':
     asyncio.run(main())
