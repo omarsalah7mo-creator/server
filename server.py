@@ -3,7 +3,7 @@ import websockets
 import os
 from telebot.async_telebot import AsyncTeleBot
 
-BOT_TOKEN = os.environ.get("8290696483:AAG-yonVayadxER2bWAUUVzxV0tOxhTGYws")  # حط التوكن في Variables
+BOT_TOKEN = "8290696483:AAG-yonVayadxER2bWAUUVzxV0tOxhTGYws"
 CHANNEL_ID = -1002484572207 
 
 bot = AsyncTeleBot(BOT_TOKEN)
@@ -44,3 +44,4 @@ async def main():
 
 if __name__ == '__main__':
     asyncio.run(main())
+
